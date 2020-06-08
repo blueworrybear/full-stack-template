@@ -1,0 +1,23 @@
+[http.routers]
+  [http.routers.web-router]
+    rule = "Host(`$DOMAIN`)"
+    service = "web-service"
+    [http.routers.web-router.tls]
+      certResolver = "myresolver"
+
+  [http.routers.api-router]
+    rule = "Host(`$DOMAIN`) && Path(`/api`)"
+    service = "api-service"
+    priority = 1
+    [http.routers.api-router.tls]
+      certResolver = "myresolver"
+
+ 
+
+[http.services]
+  [http.services.web-service.loadBalancer]
+    [[http.services.web-service.loadBalancer.servers]]
+      url = "http://127.0.0.1:6060"
+  [http.services.api-service.loadBalancer]
+    [[http.services.api-service.loadBalancer.servers]]
+      url = "http://127.0.0.1:3000"
