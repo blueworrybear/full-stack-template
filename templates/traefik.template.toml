@@ -1,19 +1,6 @@
 [entryPoints]
   [entryPoints.web]
-  address = ":80"
-  [entryPoints.websecure]
-  address = ":443"
-  [entryPoints.websecure.http.tls]
-    certResolver = "myresolver"
-    [[entryPoints.websecure.http.tls.domains]]
-      main = "$DOMAIN"
-
-[certificatesResolvers.myresolver.acme]
-  email = "blueworrybear@gmail.com"
-  storage = "/home/traefik/acme.json"
-  [certificatesResolvers.myresolver.acme.httpChallenge]
-    # used during the challenge
-    entryPoint = "web"
+  address = ":$PORT"
 [providers]
   [providers.file]
     filename = "/etc/traefik/provider.toml"

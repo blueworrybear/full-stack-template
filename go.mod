@@ -1,6 +1,6 @@
 module github.com/blueworrybear/full-stack-template
 
-go 1.14
+go 1.13
 
 require (
 	github.com/gin-contrib/cors v1.3.1

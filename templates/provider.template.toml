@@ -1,18 +1,19 @@
 [http.routers]
   [http.routers.web-router]
-    rule = "Host(`$DOMAIN`)"
+    rule = "PathPrefix(`/`)"
     service = "web-service"
-    [http.routers.web-router.tls]
-      certResolver = "myresolver"
+    priority = 1
 
   [http.routers.api-router]
-    rule = "Host(`$DOMAIN`) && Path(`/api`)"
+    rule = "PathPrefix(`/api`)"
     service = "api-service"
-    priority = 1
-    [http.routers.api-router.tls]
-      certResolver = "myresolver"
+    middlewares = ["api-prefix"]
+    priority = 2
 
- 
+[http.middlewares]
+  [http.middlewares.api-prefix.stripPrefix]
+    prefixes = ["/api"]
+    forceSlash = true
 
 [http.services]
   [http.services.web-service.loadBalancer]
